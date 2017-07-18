@@ -62,7 +62,7 @@ function createInput(game, svgElement) {
     function createMessaging() {
         var timer;
 
-        function emitMessage(text, hold = false) {
+        function emitMessage(text, hold) {
             if (!text) {
                 messageElement.classList.remove('show');
                 return;
@@ -101,19 +101,18 @@ function createInput(game, svgElement) {
         for (var i = 0, node; node = nodes[i]; ++i) {
             id = node.getAttribute('id');
             if (id.startsWith('snex-button-')) {
-                node.addEventListener('click', (function(button) {
-                    return function () {
-                        handleClick(button);
-                    };
-                })(id.replace('snex-button-', '')));
+                node.addEventListener('click',
+                    createHandler(id.replace('snex-button-', '')));
             }
         }
     }
 
-    function handleClick(button) {
-        keyName = button;
-        stop();
-        start();
+    function createHandler(button) {
+        return function onClick() {
+            keyName = button;
+            stop();
+            start();
+        };
     }
 
     var emitMessage = createMessaging();
@@ -132,5 +131,5 @@ function createInput(game, svgElement) {
 }
 
 module.exports = {
-    createInput,
+    createInput: createInput,
 };
