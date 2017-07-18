@@ -1,6 +1,6 @@
-const STORAGE_KEY = 'snakesilk-nes-input-map';
+var STORAGE_KEY = 'snakesilk-nes-input-map';
 
-const HUMAN_KEYS = {
+var HUMAN_KEYS = {
     'A': 'A',
     'B': 'B',
     'START': 'START',
@@ -11,40 +11,39 @@ const HUMAN_KEYS = {
     'RIGHT': 'RIGHT',
 };
 
-const HUMAN_CODES = {
+var HUMAN_CODES = {
     37: '&larr;',
     38: '&uarr;',
     39: '&rarr;',
     40: '&darr;',
 };
 
-const REMAP_QUERY = `Press any key to remap "{{key}}".`;
-const REMAP_SUCCESS = `Remapped "{{key}}" to {{code}}.`;
+var REMAP_QUERY = `Press any key to remap "{{key}}".`;
+var REMAP_SUCCESS = `Remapped "{{key}}" to {{code}}.`;
 
-function createInput(game, svgElement, storageKey = STORAGE_KEY) {
-
+function createInput(game, svgElement) {
     function saveMap() {
-        const map = game.input.exportMap();
-        localStorage.setItem(storageKey, JSON.stringify(map));
+        var map = game.input.exportMap();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(map));
     }
 
     function loadMap() {
-        const map = localStorage.getItem(storageKey);
+        var map = localStorage.getItem(STORAGE_KEY);
         if (map) {
             game.input.importMap(JSON.parse(map));
         }
     }
 
-    const domElement = document.createElement('div');
+    var domElement = document.createElement('div');
     domElement.classList.add('snakesilk-nes-input');
 
-    const messageElement = document.createElement('div');
+    var messageElement = document.createElement('div');
     messageElement.classList.add('message');
     domElement.appendChild(messageElement);
 
-    let keyName = null;
+    var keyName = null;
     function handleInput(event) {
-        const keyCode = event.keyCode;
+        var keyCode = event.keyCode;
         if (keyCode === 27) {
             stop();
             emitMessage(null);
@@ -52,7 +51,7 @@ function createInput(game, svgElement, storageKey = STORAGE_KEY) {
         }
 
         game.input.assign(keyCode, keyName.toLowerCase());
-        const text = REMAP_SUCCESS
+        var text = REMAP_SUCCESS
             .replace('{{key}}', HUMAN_KEYS[keyName])
             .replace('{{code}}', HUMAN_CODES[keyCode] || String.fromCharCode(keyCode) || keyCode);
         emitMessage(text, false);
@@ -61,7 +60,7 @@ function createInput(game, svgElement, storageKey = STORAGE_KEY) {
     }
 
     function creatMessaging() {
-        let timer;
+        var timer;
 
         function emitMessage(text, hold = false) {
             if (!text) {
@@ -84,7 +83,7 @@ function createInput(game, svgElement, storageKey = STORAGE_KEY) {
     }
 
     function start() {
-        const text = REMAP_QUERY
+        var text = REMAP_QUERY
             .replace('{{key}}', HUMAN_KEYS[keyName]);
 
         emitMessage(text, true);
@@ -97,11 +96,11 @@ function createInput(game, svgElement, storageKey = STORAGE_KEY) {
     }
 
     function initialize(svg) {
-        const nodes = svg.querySelectorAll('[id]')
-        for (let i = 0, node; node = nodes[i]; ++i) {
-            const id = node.getAttribute('id');
+        var nodes = svg.querySelectorAll('[id]')
+        for (var i = 0, node; node = nodes[i]; ++i) {
+            var id = node.getAttribute('id');
             if (id.startsWith('snex-button-')) {
-                const button = id.replace('snex-button-', '');
+                var button = id.replace('snex-button-', '');
                 node.addEventListener('click', () => {
                     handleClick(button);
                 });
@@ -124,7 +123,7 @@ function createInput(game, svgElement, storageKey = STORAGE_KEY) {
         });
     }
 
-    const emitMessage = creatMessaging();
+    var emitMessage = creatMessaging();
 
     loadMap();
 
