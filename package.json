@@ -1,6 +1,6 @@
 {
   "name": "@snakesilk/nes-input-mapper",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "On screen key mapper for NES input.",
   "license": "MIT",
   "main": "./src/createInput.js"
