@@ -1,5 +1,5 @@
 {
-  "name": "@snakesilk/nes-input",
+  "name": "@snakesilk/nes-input-mapper",
   "version": "0.0.0",
   "description": "On screen key mapper for NES input.",
   "license": "MIT",
