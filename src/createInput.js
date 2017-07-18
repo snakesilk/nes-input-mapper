@@ -59,7 +59,7 @@ function createInput(game, svgElement) {
         stop();
     }
 
-    function creatMessaging() {
+    function createMessaging() {
         var timer;
 
         function emitMessage(text, hold = false) {
@@ -97,13 +97,16 @@ function createInput(game, svgElement) {
 
     function initialize(svg) {
         var nodes = svg.querySelectorAll('[id]')
+        var id;
         for (var i = 0, node; node = nodes[i]; ++i) {
-            var id = node.getAttribute('id');
+            id = node.getAttribute('id');
             if (id.startsWith('snex-button-')) {
-                var button = id.replace('snex-button-', '');
-                node.addEventListener('click', () => {
-                    handleClick(button);
-                });
+                node.addEventListener('click', (function(button) {
+                    console.log('Button', button);
+                    return function () {
+                        handleClick(button);
+                    };
+                })(id.replace('snex-button-', '')));
             }
         }
     }
@@ -115,6 +118,8 @@ function createInput(game, svgElement) {
         start();
     }
 
+    var emitMessage = createMessaging();
+
     if (svgElement.contentDocument) {
         initialize(svgElement.contentDocument);
     } else {
@@ -122,8 +127,6 @@ function createInput(game, svgElement) {
             initialize(this.contentDocument);
         });
     }
-
-    var emitMessage = creatMessaging();
 
     loadMap();
 
