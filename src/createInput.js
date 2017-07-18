@@ -112,7 +112,6 @@ function createInput(game, svgElement) {
     }
 
     function handleClick(button) {
-        console.log(button);
         keyName = button;
         stop();
         start();
