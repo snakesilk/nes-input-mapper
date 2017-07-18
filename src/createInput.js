@@ -18,8 +18,8 @@ var HUMAN_CODES = {
     40: '&darr;',
 };
 
-var REMAP_QUERY = `Press any key to remap "{{key}}".`;
-var REMAP_SUCCESS = `Remapped "{{key}}" to {{code}}.`;
+var REMAP_QUERY = 'Press any key to remap "{{key}}".';
+var REMAP_SUCCESS = 'Remapped "{{key}}" to {{code}}.';
 
 function createInput(game, svgElement) {
     function saveMap() {
@@ -102,7 +102,6 @@ function createInput(game, svgElement) {
             id = node.getAttribute('id');
             if (id.startsWith('snex-button-')) {
                 node.addEventListener('click', (function(button) {
-                    console.log('Button', button);
                     return function () {
                         handleClick(button);
                     };
